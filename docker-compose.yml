@@ -1,15 +1,15 @@
 version: "3"
 services:
   api:
-    image: flagsmith/flagsmith-api:latest
+    image: flagsmith/flagsmith-api:v2.5.5
     environment:
       DJANGO_ALLOWED_HOSTS: "*" # Change this in production
       DATABASE_URL: postgresql://postgres:password@db:5432/flagsmith
-      INFLUXDB_URL: http://influxdb:8086
-      INFLUXDB_BUCKET: flagsmith_api
-      INFLUXDB_ORG: # Add your influx org id here - see readme.md
-      INFLUXDB_TOKEN: # Add your influx token here - see readme.md
-      
+      # INFLUXDB_URL: http://influxdb:8086
+      # INFLUXDB_BUCKET: flagsmith_api
+      # INFLUXDB_ORG: # Add your influx org id here - see readme.md
+      # INFLUXDB_TOKEN: # Add your influx token here - see readme.md
+
     ports:
       - "8000:8000"
     depends_on:
@@ -20,10 +20,10 @@ services:
     container_name: flagsmith_api
 
   frontend:
-    image: flagsmith/flagsmith-frontend:latest
+    image: flagsmith/flagsmith-frontend:v2.5.4
     environment:
       # You might need to change the 2 host names below depending on your docker dns setup
-      API_URL: http://localhost:8000/api/v1/ 
+      API_URL: http://localhost:8000/api/v1/
       ASSET_URL: http://localhost:8080/
     ports:
       - "8080:8080"
@@ -37,10 +37,9 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: flagsmith
     container_name: flagsmith_postgres
-    
-  influxdb:
-    image: quay.io/influxdb/influxdb:v2.0.3
-    container_name: flagsmith_influxdb
-    ports:
-      - "8086:8086"
-    
+
+  # influxdb:
+  #   image: quay.io/influxdb/influxdb:v2.0.3
+  #   container_name: flagsmith_influxdb
+  #   ports:
+  #     - "8086:8086"
